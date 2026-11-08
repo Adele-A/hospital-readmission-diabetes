@@ -74,3 +74,26 @@ is a portfolio project; the point is that choices are explicit and defensible.
   (8.59% at 0 → 26.40% at 3+); prior emergency visits (10.69% → 21.71%); discharge
   to psychiatric (36.7%) / rehab (27.7%); diabetes as primary diagnosis 13.1%.
   HbA1c measured vs not shows no large difference in this descriptive view.
+
+## Stage 4 — Splits & leakage protection
+
+- **D4.1 Patient-grouped hold-out.** `GroupShuffleSplit` by `patient_nbr`,
+  test_size 0.2, seed 42. **train = 79,682 enc / 55,989 patients (11.47% pos);
+  test = 19,658 enc / 13,998 patients (11.06% pos); patient overlap = 0.** Test is
+  untouched until Stage 6.
+- **D4.2 CV inside train.** `StratifiedGroupKFold` (5 folds, groups =
+  `patient_nbr`, shuffle, seed 42). Each fold's validation positive rate ≈ 11.47%;
+  fold group overlap = 0.
+- **D4.3 Deterministic, not persisted.** Cohort is loaded ordered by
+  `encounter_id`, so the split is reproducible from the seed without storing
+  indices.
+- **D4.4 Leakage-safe transforms.** Stateless row-wise features (ICD-9 groups,
+  `"?"`→`Missing`, numeric cast) in `feature_defs.py`; all *learned* transforms
+  (median imputation, scaling, one-hot with rare-level grouping via `min_frequency`
+  and `handle_unknown="infrequent_if_exist"`) inside a `ColumnTransformer` fit on
+  train folds only (`models/pipeline.py`).
+- **D4.5 Never-features.** `encounter_id`, `patient_nbr`, `readmitted`, `y`,
+  `is_first_encounter`, `weight`, raw `diag_1..3` excluded from `X`.
+- **D4.6 Automated guards.** `tests/test_leakage.py`: zero train/test patient
+  overlap, zero CV fold overlap, preprocessor fit never sees test categories,
+  feature frame excludes identifiers/outcome.

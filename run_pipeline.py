@@ -23,6 +23,7 @@ from src.data import download as download_mod
 from src.data import load as load_mod
 from src.data import quality_audit
 from src.eda import descriptive as eda_mod
+from src.models import splits as splits_mod
 
 
 def main() -> None:
@@ -45,16 +46,19 @@ def main() -> None:
     finally:
         con.close()
 
-    print("[3/5] Data quality audit")
+    print("[3/6] Data quality audit")
     quality_audit.main()
 
-    print("[4/5] Cohort definition + exclusion flow")
+    print("[4/6] Cohort definition + exclusion flow")
     cohort_mod.main()
 
-    print("[5/5] Exploratory analysis")
+    print("[5/6] Exploratory analysis")
     eda_mod.main()
 
-    print("Pipeline (Stages 1-3) complete.")
+    print("[6/6] Train/test split + CV leakage summary")
+    splits_mod.main()
+
+    print("Pipeline (Stages 1-4) complete.")
 
 
 if __name__ == "__main__":
