@@ -1,0 +1,5 @@
+model,is_baseline
+Baseline: prevalence,True
+Baseline: inpatient rule,True
+Logistic regression,False
+Gradient boosting,False

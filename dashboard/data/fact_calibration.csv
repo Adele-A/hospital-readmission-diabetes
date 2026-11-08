@@ -1,0 +1,21 @@
+model,bin,n,mean_predicted,observed_rate
+Logistic regression,0,1966,0.05623,0.03662
+Logistic regression,1,1966,0.06814,0.05341
+Logistic regression,2,1966,0.07638,0.07884
+Logistic regression,3,1965,0.08432,0.07888
+Logistic regression,4,1966,0.0926,0.09156
+Logistic regression,5,1966,0.10229,0.09664
+Logistic regression,6,1965,0.11447,0.11756
+Logistic regression,7,1966,0.13041,0.14293
+Logistic regression,8,1966,0.15673,0.16022
+Logistic regression,9,1966,0.24649,0.24975
+Gradient boosting,0,1966,0.0479,0.04323
+Gradient boosting,1,1966,0.05979,0.04578
+Gradient boosting,2,1966,0.0694,0.0646
+Gradient boosting,3,1965,0.07892,0.07277
+Gradient boosting,4,1966,0.08992,0.08749
+Gradient boosting,5,1966,0.10203,0.11241
+Gradient boosting,6,1965,0.11583,0.10891
+Gradient boosting,7,1966,0.13525,0.13327
+Gradient boosting,8,1966,0.17108,0.16989
+Gradient boosting,9,1966,0.25885,0.26806

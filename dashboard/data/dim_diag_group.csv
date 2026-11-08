@@ -1,0 +1,11 @@
+diag_1_group,sort_order
+circulatory,0
+respiratory,1
+digestive,2
+diabetes,3
+injury,4
+musculoskeletal,5
+genitourinary,6
+neoplasms,7
+other,8
+Missing,9

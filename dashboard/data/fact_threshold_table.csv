@@ -1,0 +1,7 @@
+model,operating_point,threshold,flagged,flagged_per_1000,sensitivity,specificity,ppv,npv,tp,fp,tn,fn
+Gradient boosting,top10 (highest-risk 10%),0.1954,1967,100.1,0.242,0.918,0.268,0.907,527,1440,16043,1648
+Gradient boosting,top20 (highest-risk 20%),0.151,3868,196.8,0.393,0.828,0.221,0.916,854,3014,14469,1321
+Gradient boosting,sens~50%,0.1286,5392,274.3,0.488,0.752,0.197,0.922,1062,4330,13153,1113
+Logistic regression,top10 (highest-risk 10%),0.1792,1942,98.8,0.221,0.916,0.248,0.904,481,1461,16022,1694
+Logistic regression,top20 (highest-risk 20%),0.1414,3875,197.1,0.368,0.824,0.206,0.913,800,3075,14408,1375
+Logistic regression,sens~50%,0.1221,5826,296.4,0.495,0.728,0.185,0.921,1076,4750,12733,1099

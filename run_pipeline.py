@@ -24,6 +24,8 @@ from src.data import load as load_mod
 from src.data import quality_audit
 from src.eda import descriptive as eda_mod
 from src.evaluation import evaluate as evaluate_mod
+from src.export import dashboard_preview as preview_mod
+from src.export import powerbi as export_mod
 from src.models import splits as splits_mod
 from src.models import train as train_mod
 
@@ -63,10 +65,16 @@ def main() -> None:
     print("[7/8] Train + cross-validate models")
     train_mod.main()
 
-    print("[8/8] Hold-out evaluation")
+    print("[8/10] Hold-out evaluation")
     evaluate_mod.main()
 
-    print("Pipeline (Stages 1-6) complete.")
+    print("[9/10] Power BI star-schema export")
+    export_mod.main()
+
+    print("[10/10] Plotly dashboard preview")
+    preview_mod.main()
+
+    print("Pipeline (Stages 1-7) complete.")
 
 
 if __name__ == "__main__":

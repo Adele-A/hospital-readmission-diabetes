@@ -146,3 +146,21 @@ is a portfolio project; the point is that choices are explicit and defensible.
   modestly beat the simple prior-inpatient-visits rule; the dominant signals are
   prior inpatient visits and discharge disposition. This is a reasonable, honest
   result for this dataset, not a clinically validated tool.
+
+## Stage 7 — Power BI export & dashboard
+
+- **D7.1 Star schema.** `fact_encounters` (one row per cohort encounter, lean
+  aggregatable dimensions + target + out-of-sample risk) linked to `dim_model`,
+  `dim_age_group`, `dim_diag_group`; plus `fact_metrics`, `fact_calibration`,
+  `fact_threshold_table`, `fact_subgroup_performance`. UTF-8, dot-decimal,
+  documented in `dashboard/DATA_DICTIONARY.md`.
+- **D7.2 Predictions only on test.** `predicted_risk` / `high_risk_top20` populated
+  for the test split only (out-of-sample); train rows blank. Risk visuals filter
+  `split = test`; descriptive visuals use the full cohort.
+- **D7.3 Spec, not .pbix.** `dashboard/POWERBI_SPEC.md` gives import steps, model
+  relationships, DAX measures, and the four pages (cohort overview / associated
+  characteristics / patient groups / model performance). Adele builds the `.pbix`
+  on Windows; README says "data model + spec ready; screenshots coming soon".
+- **D7.4 Cross-platform preview.** Self-contained Plotly
+  `reports/dashboard_preview.html` (Plotly inlined) opens in any browser without
+  Power BI.
