@@ -72,10 +72,11 @@ def build_feature_frame(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str], list
         for c in df.columns
         if c not in DROP_ALWAYS and c not in NUMERIC_FEATURES
     )
-    # Stateless "?" -> Missing on categorical columns only.
+    # Stateless "?" -> Missing on every categorical column. Note: DuckDB's .df()
+    # returns string columns as pandas StringDtype (not object) on this stack, so we
+    # do NOT gate on dtype == object — that would silently skip the replacement.
     for c in categorical:
-        if df[c].dtype == object:
-            df[c] = df[c].replace("?", MISSING_TOKEN)
+        df[c] = df[c].replace("?", MISSING_TOKEN)
 
     numeric = [c for c in NUMERIC_FEATURES if c in df.columns]
     x = df[numeric + categorical].copy()

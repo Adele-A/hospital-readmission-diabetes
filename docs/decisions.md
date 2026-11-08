@@ -97,3 +97,26 @@ is a portfolio project; the point is that choices are explicit and defensible.
 - **D4.6 Automated guards.** `tests/test_leakage.py`: zero train/test patient
   overlap, zero CV fold overlap, preprocessor fit never sees test categories,
   feature frame excludes identifiers/outcome.
+
+## Stage 5 — Models
+
+- **D5.1 Baselines.** (a) constant train prevalence; (b) prior-inpatient-visits
+  rule (empirical rate per 0/1/2/3+ bucket). Both scored with the same CV/metrics.
+- **D5.2 Logistic regression.** L2, `C` selected by patient-grouped CV (grid
+  {0.01, 0.1, 1.0}; chosen `C=0.01`). Odds-ratio table in `reports/odds_ratios.md`
+  with an explicit "adjusted associations, not causal" disclaimer.
+- **D5.3 Gradient boosting.** `HistGradientBoostingClassifier` with early stopping;
+  modest CV grid (learning_rate, max_leaf_nodes, l2). Needs **dense** one-hot input
+  (LR uses sparse) — `build_preprocessor(sparse=...)` handles both.
+- **D5.4 No oversampling / no class weights.** ~11% positives kept as-is so
+  predicted probabilities stay calibration-ready (calibration checked on test in
+  Stage 6). Thresholds NOT selected here; test set untouched.
+- **D5.5 Bug fixed — `"?"`→`Missing`.** DuckDB's `.df()` returns string columns as
+  pandas `StringDtype`, not `object`; the original dtype-gated replace silently
+  skipped `payer_code`/`medical_specialty`. Fixed to replace unconditionally; CV
+  metrics unchanged (relabeling only).
+- **CV results (train only, 5-fold grouped, mean ± std):**
+  prevalence ROC-AUC 0.500 / PR-AUC 0.1147; inpatient rule 0.609 / 0.165;
+  logistic regression 0.663 / 0.214; gradient boosting **0.672 / 0.234**. The
+  models beat the simple rule modestly — reported honestly; final hold-out
+  evaluation with bootstrap CIs is Stage 6.

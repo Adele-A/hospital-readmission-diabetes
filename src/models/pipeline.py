@@ -26,6 +26,7 @@ def build_preprocessor(
     categorical_features: list[str],
     scale: bool = True,
     min_frequency: float = 0.01,
+    sparse: bool = True,
 ) -> ColumnTransformer:
     """Build the fit-on-train-only preprocessing ColumnTransformer.
 
@@ -37,6 +38,9 @@ def build_preprocessor(
     min_frequency:
         Categorical levels rarer than this fraction of the training rows are
         grouped into a single ``infrequent`` level — learned on train only.
+    sparse:
+        One-hot output format. Logistic regression handles sparse input; set
+        ``sparse=False`` for ``HistGradientBoostingClassifier``, which needs dense.
     """
     num_steps: list = [("impute", SimpleImputer(strategy="median"))]
     if scale:
@@ -51,7 +55,7 @@ def build_preprocessor(
                 OneHotEncoder(
                     handle_unknown="infrequent_if_exist",
                     min_frequency=min_frequency,
-                    sparse_output=True,
+                    sparse_output=sparse,
                 ),
             ),
         ]
