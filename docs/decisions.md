@@ -120,3 +120,29 @@ is a portfolio project; the point is that choices are explicit and defensible.
   logistic regression 0.663 / 0.214; gradient boosting **0.672 / 0.234**. The
   models beat the simple rule modestly — reported honestly; final hold-out
   evaluation with bootstrap CIs is Stage 6.
+
+## Stage 6 — Hold-out evaluation
+
+- **D6.1 Patient-cluster bootstrap.** All 95% CIs resample **patients** (clusters)
+  with replacement, 1,000 replicates, preserving within-patient correlation.
+- **D6.2 Thresholds set on train CV only.** Operating points (top-10% / top-20% by
+  risk; ~50% sensitivity) are derived from train out-of-fold probabilities and
+  applied unchanged to test — never tuned on test.
+- **D6.3 Calibration = Cox intercept/slope.** Fit of outcome on logit(p);
+  unpenalised logistic (`C=1e10`, since `penalty=None` is deprecated in sklearn
+  >= 1.8). Models slightly over-predict (intercept ~0.17, slope ~1.10).
+- **D6.4 Subgroups = robustness check, not a fairness audit.** Age/sex/race AUC +
+  calibration; subgroups < 100 or single-class reported with size only. Careful
+  wording; small groups are noisy.
+- **D6.5 Explainability.** LR odds ratios (Stage 5) + permutation importance for
+  the booster on test. Both framed as predictive/associational, not causal.
+- **Headline test results (95% patient-bootstrap CI):**
+  ROC-AUC — prevalence 0.500; inpatient rule 0.597 (0.583–0.611); logistic
+  0.660 (0.646–0.674); **gradient boosting 0.674 (0.660–0.688)**. PR-AUC (no-skill
+  0.111): logistic 0.207, boosting 0.231. ΔROC-AUC boosting − inpatient rule
+  **0.077 (0.067–0.087)** (CI excludes 0); boosting − logistic 0.014 (0.009–0.019).
+  First-encounter sensitivity analysis consistent (boosting ROC-AUC 0.663).
+- **Honest takeaway.** The models clearly beat the no-information baseline and
+  modestly beat the simple prior-inpatient-visits rule; the dominant signals are
+  prior inpatient visits and discharge disposition. This is a reasonable, honest
+  result for this dataset, not a clinically validated tool.
