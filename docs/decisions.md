@@ -164,3 +164,16 @@ is a portfolio project; the point is that choices are explicit and defensible.
 - **D7.4 Cross-platform preview.** Self-contained Plotly
   `reports/dashboard_preview.html` (Plotly inlined) opens in any browser without
   Power BI.
+
+## Stage 8 — Report, README, reproducibility
+
+- **D8.1 Honest framing enforced.** README and `reports/model_report.md` state the
+  models only modestly beat the simple rule, report CIs, and carry an explicit
+  Disclaimer ("independent portfolio project, not a clinical tool; historical US
+  1999–2008; no claim of reducing readmissions"). No "deployed/validated" language.
+- **D8.2 Both-OS run instructions.** README gives macOS/Linux and Windows
+  PowerShell venv + `python run_pipeline.py`; dashboard marked "spec ready,
+  screenshots coming soon" with a TODO (no `.pbix` claimed).
+- **D8.3 From-scratch reproducibility check.** `data/` wiped and
+  `python run_pipeline.py` re-run end-to-end (re-download → … → export); headline
+  numbers match the committed reports (fixed seeds), tests green, ruff clean.
