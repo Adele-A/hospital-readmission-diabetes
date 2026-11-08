@@ -37,3 +37,20 @@ is a portfolio project; the point is that choices are explicit and defensible.
 - **D1.6 Optional libraries skipped.** `lightgbm` has no Python 3.14 wheel →
   `HistGradientBoostingClassifier` used instead. `shap` skipped → LR coefficients
   + permutation importance for explainability.
+
+## Stage 2 — Cohort & target
+
+- **D2.1 Target frozen.** `y = 1` iff `readmitted == "<30"`, else `0`
+  (`">30"` and `"NO"` → `0`). One target for all stages; no relabeling.
+- **D2.2 Unit of observation.** Primary = all eligible encounters with
+  `patient_nbr`-grouped splits; sensitivity = first encounter per patient
+  (`is_first_encounter`, min `encounter_id`).
+- **D2.3 Exclusions (frozen, applied in order).** (1) death/hospice discharge
+  `{11,13,14,19,20,21}` → −2,423 encounters / −1,528 patients; (2) gender
+  `Unknown/Invalid` → −3 encounters. **Analytic cohort = 99,340 encounters /
+  69,987 patients; 11,314 positives (11.39%).**
+- **D2.4 Not excluded (kept on purpose).** Transfers / "still patient"
+  dispositions and `Not Mapped`/`Unknown` dispositions (25, 26) are kept — the
+  30-day outcome is still defined for them. Documented in `cohort_definition.md`.
+- **D2.5 Prevalence baseline.** 11.39% is the constant-probability baseline for
+  Stage 5 model comparison.

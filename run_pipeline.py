@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 
 from src.config import load_config
+from src.data import cohort as cohort_mod
 from src.data import download as download_mod
 from src.data import load as load_mod
 from src.data import quality_audit
@@ -33,20 +34,23 @@ def main() -> None:
     cfg = load_config()
 
     if not args.skip_download:
-        print("[1/3] Download")
+        print("[1/4] Download")
         download_mod.download()
 
-    print("[2/3] Load into DuckDB")
+    print("[2/4] Load into DuckDB")
     con = load_mod.connect(cfg)
     try:
         load_mod.build_database(con, cfg)
     finally:
         con.close()
 
-    print("[3/3] Data quality audit")
+    print("[3/4] Data quality audit")
     quality_audit.main()
 
-    print("Pipeline (Stage 1) complete.")
+    print("[4/4] Cohort definition + exclusion flow")
+    cohort_mod.main()
+
+    print("Pipeline (Stages 1-2) complete.")
 
 
 if __name__ == "__main__":

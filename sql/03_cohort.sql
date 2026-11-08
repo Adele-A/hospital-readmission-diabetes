@@ -1,0 +1,23 @@
+-- 03_cohort.sql — cohort definition and target variable.
+-- Built by src/data/cohort.py so the exclusion list and death/hospice codes come
+-- from config/config.yaml. This file documents the equivalent SQL.
+--
+-- Target: y = 1 iff readmitted == '<30', else 0 ('>30' and 'NO' both map to 0).
+--
+-- Exclusions (applied in order):
+--   1. discharge_disposition_id in (11,13,14,19,20,21)  -> death / hospice
+--   2. gender = 'Unknown/Invalid'
+--
+-- Analytic cohort table (primary = all eligible encounters):
+--
+--   CREATE TABLE cohort AS
+--   SELECT
+--       *,
+--       CASE WHEN readmitted = '<30' THEN 1 ELSE 0 END AS y,
+--       (row_number() OVER (PARTITION BY patient_nbr
+--                           ORDER BY CAST(encounter_id AS BIGINT)) = 1) AS is_first_encounter
+--   FROM encounters_raw
+--   WHERE CAST(discharge_disposition_id AS INTEGER) NOT IN (11,13,14,19,20,21)
+--     AND gender <> 'Unknown/Invalid';
+--
+-- Sensitivity cohort = rows WHERE is_first_encounter (one encounter per patient).
