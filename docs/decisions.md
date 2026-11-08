@@ -54,3 +54,23 @@ is a portfolio project; the point is that choices are explicit and defensible.
   30-day outcome is still defined for them. Documented in `cohort_definition.md`.
 - **D2.5 Prevalence baseline.** 11.39% is the constant-probability baseline for
   Stage 5 model comparison.
+
+## Stage 3 — Exploratory analysis
+
+- **D3.1 ICD-9 grouping.** Built `src/features/icd9_groups.py` with the Strack et
+  al. scheme (circulatory, respiratory, digestive, diabetes, injury,
+  musculoskeletal, genitourinary, neoplasms, other; V/E codes → other; `?` →
+  Missing). Versioned and tested (`test_icd9_groups.py`).
+- **D3.2 Uncertainty = 95% Wilson interval.** Wilson score interval for every
+  proportion (better small-sample behaviour than the normal approximation).
+- **D3.3 Descriptive only.** All Stage-3 numbers are encounter-level associations,
+  not causal, and ignore within-patient dependence (handled by splits in Stage 4).
+  Stated at the top of `reports/eda_report.md`.
+- **D3.4 Binning.** Counts bucketed (prior inpatient 0/1/2/3+, emergency &
+  outpatient 0/1/2+), length of stay and number-of-diagnoses binned, age kept in
+  the dataset's 10-year bands. `race == "?"` shown as an explicit `Missing`
+  category with careful wording.
+- **Key signals (descriptive):** strongest gradient is prior inpatient visits
+  (8.59% at 0 → 26.40% at 3+); prior emergency visits (10.69% → 21.71%); discharge
+  to psychiatric (36.7%) / rehab (27.7%); diabetes as primary diagnosis 13.1%.
+  HbA1c measured vs not shows no large difference in this descriptive view.

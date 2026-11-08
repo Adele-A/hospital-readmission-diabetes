@@ -22,6 +22,7 @@ from src.data import cohort as cohort_mod
 from src.data import download as download_mod
 from src.data import load as load_mod
 from src.data import quality_audit
+from src.eda import descriptive as eda_mod
 
 
 def main() -> None:
@@ -44,13 +45,16 @@ def main() -> None:
     finally:
         con.close()
 
-    print("[3/4] Data quality audit")
+    print("[3/5] Data quality audit")
     quality_audit.main()
 
-    print("[4/4] Cohort definition + exclusion flow")
+    print("[4/5] Cohort definition + exclusion flow")
     cohort_mod.main()
 
-    print("Pipeline (Stages 1-2) complete.")
+    print("[5/5] Exploratory analysis")
+    eda_mod.main()
+
+    print("Pipeline (Stages 1-3) complete.")
 
 
 if __name__ == "__main__":
