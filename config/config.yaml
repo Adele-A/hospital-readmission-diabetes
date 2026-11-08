@@ -1,0 +1,37 @@
+# Central configuration for the readmission pipeline.
+# All paths are relative to the repository root (resolved in src/paths.py).
+
+seed: 42
+
+data:
+  # UCI Diabetes 130-US Hospitals (dataset id 296). URL verified reachable 2026-11-08.
+  uci_zip_url: "https://archive.ics.uci.edu/static/public/296/diabetes+130-us+hospitals+for+years+1999-2008.zip"
+  uci_dataset_id: 296
+  encounters_csv: "diabetic_data.csv"
+  ids_mapping_csv: "IDS_mapping.csv"
+  # "?" is the dataset's missing marker. "None" is a real category and is NOT in this list.
+  na_values: ["?"]
+
+cohort:
+  target_column: "readmitted"
+  positive_label: "<30"            # y = 1 if readmitted == "<30", else 0
+  # discharge_disposition_id codes meaning death/hospice -> excluded.
+  # Verified against IDS_mapping.csv in Stage 1 before use (spec expects these).
+  death_hospice_discharge_ids: [11, 13, 14, 19, 20, 21]
+  drop_gender_unknown: true        # "Unknown/Invalid" gender (a handful of rows)
+
+features:
+  drop_columns: ["weight"]         # ~97% missing -> dropped (approved §6)
+  # payer_code kept (Variant A): administrative proxy, flagged in Limitations.
+  missing_category_token: "Missing"
+
+split:
+  test_size: 0.2
+  n_cv_folds: 5
+  group_column: "patient_nbr"
+
+paths:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  duckdb_file: "data/processed/readmission.duckdb"
+  reports_dir: "reports"

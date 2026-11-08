@@ -1,0 +1,12 @@
+-- 01_load.sql — reference for how the raw tables are built.
+-- The pipeline builds these from Python (src/data/load.py) so paths stay
+-- repo-relative and cross-platform; this file documents the equivalent SQL.
+--
+-- encounters_raw: every column kept as VARCHAR so "?" (missing) and "None"
+-- (a real category in A1Cresult / max_glu_serum) are preserved verbatim.
+--
+--   CREATE TABLE encounters_raw AS
+--   SELECT * FROM read_csv('data/raw/diabetic_data.csv', all_varchar=true, header=true);
+--
+-- ids_mapping: the three stacked blocks of IDS_mapping.csv, flattened to
+-- (mapping_type, id, description) by src/data/load.py:parse_ids_mapping().

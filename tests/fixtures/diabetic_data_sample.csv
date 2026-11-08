@@ -1,0 +1,9 @@
+encounter_id,patient_nbr,race,gender,age,weight,admission_type_id,discharge_disposition_id,admission_source_id,payer_code,medical_specialty,time_in_hospital,num_lab_procedures,num_procedures,num_medications,number_outpatient,number_emergency,number_inpatient,number_diagnoses,diag_1,diag_2,diag_3,max_glu_serum,A1Cresult,change,diabetesMed,readmitted
+1,100,Caucasian,Female,[50-60),?,1,1,7,MC,?,3,40,1,10,0,0,0,9,250.01,401,276,None,None,No,Yes,NO
+2,100,Caucasian,Female,[50-60),?,1,1,7,MC,Cardiology,5,50,2,15,0,0,1,9,414,250,401,None,>8,Ch,Yes,<30
+3,101,AfricanAmerican,Male,[60-70),?,3,11,7,?,?,2,30,0,8,0,0,0,7,428,427,250,None,Norm,No,Yes,NO
+4,102,Caucasian,Female,[70-80),?,1,13,1,HM,InternalMedicine,4,60,1,20,1,0,2,8,250.02,276,428,Norm,>7,Ch,Yes,>30
+5,103,?,Male,[40-50),?,3,1,7,?,Surgery,1,20,0,5,0,1,0,5,715,250,V45,None,None,No,No,NO
+6,104,Hispanic,Unknown/Invalid,[30-40),?,1,1,1,SP,?,6,70,3,25,0,0,0,9,250.13,401,427,>200,None,Ch,Yes,<30
+7,105,Caucasian,Male,[80-90),?,1,1,7,MC,Family/GeneralPractice,2,35,1,12,0,0,0,6,786,250,427,None,None,No,Yes,NO
+8,106,Asian,Female,[20-30),?,1,14,7,?,?,3,45,2,9,0,0,0,7,250.8,250,250,None,Norm,No,Yes,NO

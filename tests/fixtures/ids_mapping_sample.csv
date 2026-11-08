@@ -1,0 +1,14 @@
+admission_type_id,description
+1,Emergency
+3,Elective
+,
+discharge_disposition_id,description
+1,Discharged to home
+11,Expired
+13,Hospice / home
+14,Hospice / medical facility
+19,"Expired at home. Medicaid only, hospice."
+,
+admission_source_id,description
+1, Physician Referral
+7, Emergency Room
